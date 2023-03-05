@@ -1,19 +1,44 @@
 package com.example.ss6jwt.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.example.ss6jwt.enums.Role;
 
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+
+@Entity
 public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_person_id")
+	@SequenceGenerator(name = "gen_person_id", sequenceName = "seq_person_id", allocationSize = 1)
 	private Long id;
+	
+	@Column(nullable = false, length = 50)
 	private String name;
+	
+	@Column(nullable = false, unique = true, length = 100)
 	private String email;
+	
+	@Column(nullable = false, length = 60)
 	private String password;
-	private Set<Integer> roles;
+	
+	@Column(name = "role")
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "person_role")
+	private Set<Integer> roles = new HashSet<>();
 	
 	public Person() {
 		super();
