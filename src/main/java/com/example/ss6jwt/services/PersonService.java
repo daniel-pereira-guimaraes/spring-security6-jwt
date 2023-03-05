@@ -57,7 +57,7 @@ public class PersonService {
 		final String email = person.getEmail();
 		if (email != null && email.length() > 0) {
 			final Long id = person.getId(); 
-			final Person p = repository.findByEmail(email).get();
+			final Person p = repository.findByEmail(email).orElse(null);
 			if (p != null && Objects.equals(p.getEmail(), email) && !Objects.equals(p.getId(), id)) {
 				throw new DuplicationException("Email duplication: " + email);
 			}
