@@ -3,7 +3,8 @@ package com.example.ss6jwt.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,8 +34,8 @@ public class TestController {
 		return ResponseEntity.ok(jwtService.generateToken("test@mail.com"));
 	}
 	
-	@GetMapping("/token/claims/{token}")
-	public ResponseEntity<Claims> claims(@PathVariable String token) {
+	@PostMapping("/token/claims")
+	public ResponseEntity<Claims> claims(@RequestBody String token) {
 		return ResponseEntity.ok(jwtService.getClaims(token));
 	}
 	
