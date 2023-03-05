@@ -1,6 +1,7 @@
 package com.example.ss6jwt.entities;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -43,7 +44,7 @@ public class Person implements Serializable, UserDetails {
 	@Column(name = "role")
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "person_role")
-	private Set<Integer> roles = new HashSet<>();
+	private Set<Integer> roles = new HashSet<>(Arrays.asList(Role.USER.getId()));
 	
 	public Person() {
 		super();
@@ -58,6 +59,13 @@ public class Person implements Serializable, UserDetails {
 		this.setRoles(roles);
 	}
 
+	public Person(String name, String email, String password) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.password = password;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -95,7 +103,10 @@ public class Person implements Serializable, UserDetails {
 	}
 
 	public void setRoles(Set<Role> roles) {
-		this.roles = roles.stream().map(r -> r.getId()).collect(Collectors.toSet());
+		if (roles == null || roles.isEmpty())
+			this.roles.clear();
+		else
+			this.roles = roles.stream().map(r -> r.getId()).collect(Collectors.toSet());
 	}
 	
 	public void addRole(Role role) {
@@ -132,6 +143,12 @@ public class Person implements Serializable, UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", roles="
+				+ roles + "]";
 	}
 	
 }
