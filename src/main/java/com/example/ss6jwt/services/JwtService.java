@@ -7,6 +7,7 @@ import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -24,13 +25,16 @@ public class JwtService {
 		return Keys.hmacShaKeyFor(secretKey.getBytes());
 	}
 	
-	public String generateToken(String email) {
+	public String generateToken(String username) {
 		return Jwts.builder()
-			.setSubject(email)
+			.setSubject(username)
 			.setExpiration(new Date(System.currentTimeMillis() + expiration))
 			.signWith(getKey(), SignatureAlgorithm.HS512)
 			.compact();
 	}
 	
+	public Claims getClaims(String token) {
+		return Jwts.parserBuilder().setSigningKey(getKey()).build().parseClaimsJws(token).getBody();
+	}
 
 }
