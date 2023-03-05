@@ -9,8 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 public class TestController {
 
-	@GetMapping
-	public ResponseEntity<String> test() {
+	@GetMapping("/ok")
+	public ResponseEntity<String> ok() {
 		return ResponseEntity.ok("Test ok!");
+	}
+	
+	@GetMapping("/error")
+	public ResponseEntity<String> error() {
+		throw new RuntimeException("Test error!");
 	}
 }
