@@ -97,6 +97,10 @@ public class Person implements Serializable, UserDetails {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles.stream().map(r -> r.getId()).collect(Collectors.toSet());
 	}
+	
+	public void addRole(Role role) {
+		this.roles.add(role.getId());
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
