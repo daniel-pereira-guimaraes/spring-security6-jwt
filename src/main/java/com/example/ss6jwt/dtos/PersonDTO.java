@@ -12,6 +12,7 @@ public class PersonDTO {
 	private Long id;
 	private String name;
 	private String email;
+	private String password;
 	private Set<String> roles = new HashSet<>();
 	
 	public PersonDTO() {
@@ -46,6 +47,10 @@ public class PersonDTO {
 		return email;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+	
 	public Set<String> getRoles() {
 		return roles;
 	}
@@ -60,6 +65,10 @@ public class PersonDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public void setRoles(Set<Role> roles) {
