@@ -26,7 +26,6 @@ public class AuthController {
 	
 	@PostMapping("/authenticate")
 	public ResponseEntity<AuthResponseDTO> authenticate(@RequestBody AuthRequestDTO dto) {
-		System.out.println(getClass().getSimpleName() + ".authenticate");
 		return ResponseEntity.ok(authService.authenticate(dto));
 	}
 }
