@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.example.ss6jwt.dtos.PersonDTO;
 import com.example.ss6jwt.enums.Role;
 
 import jakarta.persistence.CollectionTable;
@@ -66,6 +67,12 @@ public class Person implements Serializable, UserDetails {
 		this.password = password;
 	}
 	
+	public Person(PersonDTO dto) {
+		this(dto.getName(), dto.getEmail(), dto.getPassword());
+		this.setId(dto.getId());
+		this.setStringRoles(dto.getRoles());
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -107,6 +114,13 @@ public class Person implements Serializable, UserDetails {
 			this.roles.clear();
 		else
 			this.roles = roles.stream().map(r -> r.getId()).collect(Collectors.toSet());
+	}
+	
+	public void setStringRoles(Set<String> roles) {
+		if (roles == null || roles.isEmpty())
+			this.roles.clear();
+		else
+			this.roles = roles.stream().map(s -> Role.fromDescription(s).getId()).collect(Collectors.toSet());
 	}
 	
 	public void addRole(Role role) {
