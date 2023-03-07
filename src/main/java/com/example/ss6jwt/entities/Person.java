@@ -161,8 +161,7 @@ public class Person implements Serializable, UserDetails {
 
 	@Override
 	public String toString() {
-		return "Person [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", roles="
-				+ roles + "]";
+		return "Person [id=" + id + ", name=" + name + ", email=" + email + ", roles=" + getRoles() + "]";
 	}
 	
 }
