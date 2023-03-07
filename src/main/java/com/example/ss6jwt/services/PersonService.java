@@ -6,6 +6,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.ss6jwt.dtos.PersonDTO;
 import com.example.ss6jwt.entities.Person;
 import com.example.ss6jwt.enums.Role;
 import com.example.ss6jwt.exceptions.DuplicationException;
@@ -37,6 +38,10 @@ public class PersonService {
 		person.addRole(Role.USER);
 		checkEmailDuplication(person);
 		return repository.save(person);
+	}
+	
+	public PersonDTO create(PersonDTO dto) {
+		return new PersonDTO(create(new Person(dto)));
 	}
 	
 	public Person update(Person person) {
